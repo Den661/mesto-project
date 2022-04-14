@@ -1,0 +1,26 @@
+.places__list{
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
+  row-gap: 20px;
+  column-gap: 17px;
+  list-style: none;
+}
+
+@media screen and (max-width:665px) {
+  .places__list{
+    grid-template-columns: repeat(2, 1fr);
+    max-width: calc(282px * 2 + 17px);
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width:447px) {
+  .places__list{
+    grid-template-columns: 1fr;
+    max-width: 282px;
+    margin: 0 auto;
+  }
+}

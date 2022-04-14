@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Denis Averchenkov" />
+  <title>Mesto</title>
+  <link rel="icon" href="./images/logo.svg" />
+  <link rel="stylesheet" href="./pages/index.css" />
+</head>
+
+<body class="page">
+  <header class="header">
+    <div class="header__logo-container">
+      <img class="header__logo" src="./images/logo.svg" alt="логотип проекта Mesto" />
+    </div>
+  </header>
+  <main class="content">
+    <section class="profile">
+      <div class="profile__info">
+        <img class="profile__avatar" src="./images/Kusto.jpg" alt="Аватар профиля">
+        <div class="profile__about">
+          <div>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button type="button" class="profile__edit-button"></button>
+          </div>
+          <p class="profile__bio">Исследователь океана</p>
+        </div>
+      </div>
+      <button type="button" class="profile__add-button"></button>
+    </section>
+    <section class="places">
+      <ul class="places__list">
+        <li class="place">
+          <img class="place__image" src="./images/karachaevsk.jpg" alt="Карачаевск" />
+          <div class="place__info">
+            <h2 class="place__title">Карачаево-Черкесск</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+        <li class="place">
+          <img class="place__image" src="./images/elbrus.jpg" alt="Эльбрус" />
+          <div class="place__info">
+            <h2 class="place__title">Гора Эльбрус</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+        <li class="place">
+          <img class="place__image" src="./images/dombai.jpg" alt="Домбай" />
+          <div class="place__info">
+            <h2 class="place__title">Домбай</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+        <li class="place">
+          <img class="place__image" src="./images/elbrus.jpg" alt="Эльбрус" />
+          <div class="place__info">
+            <h2 class="place__title">Гора Эльбрус</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+        <li class="place">
+          <img class="place__image" src="./images/dombai.jpg" alt="Домбай" />
+          <div class="place__info">
+            <h2 class="place__title">Домбай</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+        <li class="place">
+          <img class="place__image" src="./images/karachaevsk.jpg" alt="Карачаевск" />
+          <div class="place__info">
+            <h2 class="place__title">Карачаево-Черкесск</h2>
+            <label class="place__checkbox-container">
+              <input type="checkbox" class="place__like">
+              <span class="place__like-pseudo"></span>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </section>
+    <div class="popup popup__opened">
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form" name="popup__form">
+          <input type="text" class="popup__input" name="name" value="Жак-Ив Кусто" placeholder="Имя">
+          <input type="text" class="popup__input" name="bio" value="Исследователь океана" placeholder="О себе">
+          <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+        <button class="popup__close"></button>
+      </div>
+      </button>
+    </div>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">© 2020 Mesto Russia</p>
+  </footer>
+</body>
+
+</html>

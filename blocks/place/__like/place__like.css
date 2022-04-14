@@ -1,0 +1,28 @@
+.place__like{
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.place__like + .place__like-pseudo{
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: content-box;
+  background-color: transparent;
+  background-image: url(../../../images/like.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  width: 22px;
+  height: 19px;
+}
+
+.place__like:checked + .place__like-pseudo{
+  background-image: url(../../../images/like-checked.svg);
+}
+
+.place__like:not(:checked):hover + .place__like-pseudo {
+  opacity: 50%;
+}

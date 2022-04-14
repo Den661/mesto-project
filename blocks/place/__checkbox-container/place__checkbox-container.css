@@ -1,0 +1,11 @@
+.place__checkbox-container{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: 22px;
+  height: 19px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

@@ -1,0 +1,15 @@
+.place{
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  max-width: 282px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
