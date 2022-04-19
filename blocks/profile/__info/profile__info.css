@@ -2,10 +2,12 @@
   margin: auto 0 ;
   display: flex;
   align-items: center;
+
 }
 
-@media screen and (max-width:665px) {
+@media screen and (max-width:940px) {
   .profile__info{
     flex-direction: column;
+    width: 100%;
   }
 }

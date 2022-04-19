@@ -5,13 +5,14 @@
   align-items: center;
   border-radius: 10px;
   width: 430px;
-  max-height: 330px;
   position: relative;
+  padding-bottom: 37px;
 }
 
-@media screen and (max-width:527px) {
+@media screen and (max-width:640px) {
   .popup__container{
     max-height: 322px;
     width: 282px;
+    padding-bottom: 25px;
   }
 }

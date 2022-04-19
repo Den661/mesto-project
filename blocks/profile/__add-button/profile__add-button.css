@@ -3,19 +3,22 @@
   height: 50px;
   background-color: transparent;
   border: 1px solid #fff;
-  background-image: url(../../../images/add.png);
+  padding: 0;
+  background-image: url(../../../images/add.svg);
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 22px 22px;
+  cursor: pointer;
 }
 
 .profile__add-button:hover {
   opacity: 60%;
 }
 
-@media screen and (max-width:665px) {
+@media screen and (max-width:940px) {
   .profile__add-button{
-    margin-top: 36px;
+    margin-top: 32px;
     background-size: 16px 16px;
-    width: 88.1%;
+    width: 282px;
   }
 }

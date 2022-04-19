@@ -9,7 +9,7 @@
   list-style: none;
 }
 
-@media screen and (max-width:665px) {
+@media screen and (max-width:940px) {
   .places__list{
     grid-template-columns: repeat(2, 1fr);
     max-width: calc(282px * 2 + 17px);
@@ -17,10 +17,9 @@
   }
 }
 
-@media screen and (max-width:447px) {
+@media screen and (max-width:640px) {
   .places__list{
     grid-template-columns: 1fr;
     max-width: 282px;
-    margin: 0 auto;
   }
 }

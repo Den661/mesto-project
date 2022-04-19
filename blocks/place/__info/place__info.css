@@ -1,8 +1,8 @@
 .place__info {
   margin: 0;
-  padding-bottom: 31px;
+  padding-bottom: 26px;
   display: flex;
-  width: 87.2%;
+  width: 87.1%;
   justify-content: space-between;
   align-items: center;
 }

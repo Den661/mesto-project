@@ -9,12 +9,15 @@
   text-align: center;
   padding-top: 14px;
   padding-bottom: 18px;
-  margin: 12px auto 37px;
+  margin: 15px auto 0;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 527px) {
+@media screen and (max-width: 640px) {
   .popup__button {
-    margin: 15px auto 25px;
+    margin: 15px auto 0;
+    font-size: 14px;
+    line-height: 17px;
   }
 }
 
