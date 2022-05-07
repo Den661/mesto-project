@@ -10,29 +10,6 @@ const popupNameInput = editPopup.querySelector(".popup__input[name = 'name']");
 const popupBioInput = editPopup.querySelector(".popup__input[name = 'bio']");
 const places = document.querySelector('.places__list');
 
-profile.querySelector('.profile__edit-button').addEventListener('click', openEditForm);
-
-editPopup.querySelector('.popup__close').addEventListener('click', function (){
-  popupToggle(editPopup);
-});
-
-editPopup.querySelector('.popup__button').addEventListener('click', formSubmitHandler);
-
-addPlacePopup.querySelector('.popup__close').addEventListener('click', function (){
-  popupToggle(addPlacePopup);
-});
-
-profile.querySelector('.profile__add-button').addEventListener('click', function (){
-  popupToggle(addPlacePopup);
-});
-
-addPlacePopup.querySelector('.popup__button').addEventListener('click', newPlaceSubmitHandler);
-
-imagePopup.querySelector('.popup__close').addEventListener('click', function (){
-  popupToggle(imagePopup);
-
-});
-
 const initialCards = [
   {
     name: 'Архыз',
@@ -59,6 +36,29 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+profile.querySelector('.profile__edit-button').addEventListener('click', openEditForm);
+
+editPopup.querySelector('.popup__close').addEventListener('click', function () {
+  popupToggle(editPopup);
+});
+
+editPopup.querySelector('.popup__button').addEventListener('click', formSubmitHandler);
+
+addPlacePopup.querySelector('.popup__close').addEventListener('click', function () {
+  popupToggle(addPlacePopup);
+});
+
+profile.querySelector('.profile__add-button').addEventListener('click', function () {
+  popupToggle(addPlacePopup);
+});
+
+addPlacePopup.querySelector('.popup__button').addEventListener('click', newPlaceSubmitHandler);
+
+imagePopup.querySelector('.popup__close').addEventListener('click', function () {
+  popupToggle(imagePopup);
+
+});
 
 function popupToggle(popup) {
   popup.classList.toggle('popup_opened');
@@ -94,7 +94,7 @@ function removeElement(element) {
   element.remove();
 }
 
-function openImage (src, caption) {
+function openImage(src, caption) {
   imagePopupPic.src = src;
   imagePopupPic.alt = caption;
   imagePopupCaption.textContent = caption;
