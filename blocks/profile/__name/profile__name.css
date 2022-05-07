@@ -6,7 +6,7 @@
   line-height: 114%;
   color: #fff;
   display: block;
-  max-width: 294px;
+  width: 294px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -16,7 +16,7 @@
   .profile__name{
     font-size: 27px;
     line-height: 33px;
-    max-width: 190px;
+    width: 190px;
     margin-left: 22px;
   }
 }
