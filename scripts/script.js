@@ -6,8 +6,8 @@ const imagePopupCaption = popupBigPicture.querySelector('.popup__figcaption');
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileBio = profile.querySelector('.profile__bio');
-const popupNameInput = popupEditProfile.querySelector(".popup__input[name = 'name']");
-const popupBioInput = popupEditProfile.querySelector(".popup__input[name = 'bio']");
+const popupNameInput = popupEditProfile.querySelector(".popup__input_name");
+const popupBioInput = popupEditProfile.querySelector(".popup__input_bio");
 const places = document.querySelector('.places__list');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const popupEditProfileCloseButton = popupEditProfile.querySelector('.popup__close');
@@ -57,8 +57,8 @@ function formSubmitHandler(evt) {
 
 function newPlaceSubmitHandler(evt) {
   evt.preventDefault();
-  const name = popupAddPlace.querySelector(".popup__input[name = 'name']").value;
-  const link = popupAddPlace.querySelector(".popup__input[name = 'link']").value;
+  const name = popupAddPlace.querySelector(".popup__input_name").value;
+  const link = popupAddPlace.querySelector(".popup__input_link").value;
   const placeElement = createPlaceElement(name, link);
 
   renderPlace(placeElement);
