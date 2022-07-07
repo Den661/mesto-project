@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="Denis Averchenkov" name="author"/>
+  <title>Mesto</title>
+  <link href="<%=require('./images/logo.svg')%>" rel="icon"/>
+</head>
+
+<body class="page">
+<header class="header">
+  <img alt="логотип проекта Mesto" class="header__logo" src="<%=require('./images/logo.svg')%>"/>
+</header>
+<main class="content">
+  <section class="profile">
+    <div class="profile__info">
+      <img alt="Аватар профиля" class="profile__avatar" src="<%=require('./images/Kusto.jpg')%>">
+      <div class="profile__about">
+        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <button class="profile__edit-button" type="button"></button>
+        <p class="profile__bio">Исследователь океана</p>
+      </div>
+    </div>
+    <button class="profile__add-button" type="button"></button>
+  </section>
+  <section class="places">
+    <ul class="places__list">
+    </ul>
+  </section>
+  <div class="popup popup_type_profile-edit">
+    <div class="popup__container">
+      <h2 class="popup__title">Редактировать профиль</h2>
+      <form class="form" name="popup__form" novalidate>
+        <label class="form__label">
+          <input class="form__input popup__input_name"  minlength="2" maxlength="40" name="name" placeholder="Имя"
+                 required type="text">
+          <span class="form__input-error name-error"></span>
+        </label>
+        <label class="form__label">
+          <input class="form__input popup__input_bio"  minlength="2" maxlength="200" name="bio" placeholder="О себе"
+                 required type="text">
+          <span class="form__input-error bio-error"></span>
+        </label>
+        <button class="popup__button" type="submit">Сохранить</button>
+      </form>
+      <button class="popup__close" type="button"></button>
+    </div>
+  </div>
+  <div class="popup popup_type_place-add">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form class="form" name="popup__form" novalidate>
+        <label class="form__label">
+          <input class="form__input popup__input_name" maxlength="30" minlength="2" name="name" placeholder="Название"
+                 required type="text">
+          <span class="form__input-error name-error"></span>
+        </label>
+        <label class="form__label">
+          <input class="form__input popup__input_link" name="link" placeholder="Ссылка на картинку" required type="url">
+          <span class="form__input-error link-error"></span>
+        </label>
+        <button class="popup__button" type="submit">Создать</button>
+      </form>
+      <button class="popup__close" type="button"></button>
+    </div>
+  </div>
+  <div class="popup popup_type_image">
+    <figure class="popup__figure">
+      <img alt="" class="popup__image" src="">
+      <figcaption class="popup__figcaption"></figcaption>
+      <button class="popup__close" type="button"></button>
+    </figure>
+  </div>
+</main>
+<footer class="footer">
+  <p class="footer__copyright">© 2020 Mesto Russia</p>
+</footer>
+</body>
+<template id="place-template">
+  <li class="place">
+    <img alt="" class="place__image" src=""/>
+    <button class="place__delete-button" type="button"></button>
+    <div class="place__info">
+      <h2 class="place__title"></h2>
+      <button class="place__like" type="button"></button>
+    </div>
+  </li>
+</template>
+</html>
