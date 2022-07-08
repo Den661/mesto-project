@@ -1,9 +1,3 @@
-import {popupClose, popupOpen} from "./popup";
-import {createPlaceElement, renderPlace} from "./cards";
-import {hasInvalidInput} from "./validation";
-
-export {openEditForm, formSubmitHandler, newPlaceSubmitHandler}
-
 export const popupEditProfile = document.querySelector('.popup_type_profile-edit');
 export const popupAddPlace = document.querySelector('.popup_type_place-add');
 export const popupBigPicture = document.querySelector('.popup_type_image');
@@ -22,31 +16,31 @@ export const popupAddPlaceCloseButton = popupAddPlace.querySelector('.popup__clo
 export const profileAddPlaceButton = profile.querySelector('.profile__add-button');
 export const addPlaceForm = popupAddPlace.querySelector('.form');
 export const popupBigPictureCloseButton = popupBigPicture.querySelector('.popup__close');
+export const placeTemplate = document.querySelector("#place-template").content;
 
-function openEditForm() {
-  popupNameInput.value = profileName.textContent;
-  popupBioInput.value = profileBio.textContent
-  popupOpen(popupEditProfile);
-}
-
-function formSubmitHandler(evt) {
-  if (!hasInvalidInput(Array.from(evt.target.querySelectorAll(".form__input")))) {
-    evt.preventDefault();
-    profileName.textContent = popupNameInput.value;
-    profileBio.textContent = popupBioInput.value;
-    popupClose(evt.target.closest(".popup"));
+export const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-}
-
-function newPlaceSubmitHandler(evt) {
-  if (!hasInvalidInput(Array.from(evt.target.querySelectorAll(".form__input")))) {
-    evt.preventDefault();
-    const name = evt.target.querySelector(".popup__input_name").value;
-    const link = evt.target.querySelector(".popup__input_link").value;
-    const placeElement = createPlaceElement(name, link);
-
-    renderPlace(placeElement);
-    popupClose(evt.target.closest(".popup"));
-    evt.target.reset();
-  }
-}
+];
