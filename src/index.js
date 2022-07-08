@@ -26,7 +26,7 @@ editProfileForm.addEventListener('submit', formSubmitHandler);
 
 popupAddPlaceCloseButton.addEventListener('click', () => closePopup(popupAddPlace));
 
-addPlaceForm.addEventListener('submit', submitAddCardFormHandler);
+addPlaceForm.addEventListener('submit', submitAddPlaceFormHandler);
 
 popupBigPictureCloseButton.addEventListener('click', () => closePopup(popupBigPicture));
 
@@ -68,7 +68,7 @@ function formSubmitHandler(evt) {
     closePopup(evt.target.closest(".popup"));
 }
 
-function submitAddCardFormHandler(evt) {
+function submitAddPlaceFormHandler(evt) {
     evt.preventDefault();
     const name = evt.target.querySelector(".popup__input_name").value;
     const link = evt.target.querySelector(".popup__input_link").value;
