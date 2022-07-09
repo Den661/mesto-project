@@ -12,9 +12,12 @@ import {
   popupAddPlaceCloseButton,
   popupAddPlace,
   popupEditProfile,
-  popupBigPicture, places,
+  popupBigPicture,
+  places,
+  inputsAddCardForm,
+  formAddCard
 } from "./utils/constants";
-import {enableValidation, hideInputError, toggleButtonState} from "./components/validation";
+import {enableValidation, resetFormCondition} from "./components/validation";
 
 profileEditButton.addEventListener('click', openEditFormHandler);
 
@@ -22,11 +25,11 @@ profileAddPlaceButton.addEventListener('click', openAddPlaceHandler);
 
 popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
 
-editProfileForm.addEventListener('submit', formSubmitHandler);
+editProfileForm.addEventListener('submit', submitEditProfileForm);
 
 popupAddPlaceCloseButton.addEventListener('click', () => closePopup(popupAddPlace));
 
-addPlaceForm.addEventListener('submit', submitAddPlaceFormHandler);
+addPlaceForm.addEventListener('submit', submitAddCardForm);
 
 popupBigPictureCloseButton.addEventListener('click', () => closePopup(popupBigPicture));
 
@@ -51,24 +54,19 @@ function openEditFormHandler() {
 
 function openAddPlaceHandler() {
   const buttonElement = popupAddPlace.querySelector(".popup__button");
-  const inputList = Array.from(popupAddPlace.querySelectorAll(".form__input"));
-  const formElement = popupAddPlace.querySelector(".form")
-  formElement.reset();
-  if (formElement) {
-    toggleButtonState(inputList, buttonElement, "popup__button_inactive")
-    inputList.forEach((input) => hideInputError(formElement, input, "form__input_invalid", "form__input-error"))
-  }
+  formAddCard.reset();
+  resetFormCondition( inputsAddCardForm, buttonElement);
   openPopup(popupAddPlace);
 }
 
-function formSubmitHandler(evt) {
+function submitEditProfileForm(evt) {
     evt.preventDefault();
     profileName.textContent = popupNameInput.value;
     profileBio.textContent = popupBioInput.value;
     closePopup(evt.target.closest(".popup"));
 }
 
-function submitAddPlaceFormHandler(evt) {
+function submitAddCardForm(evt) {
     evt.preventDefault();
     const name = evt.target.querySelector(".popup__input_name").value;
     const link = evt.target.querySelector(".popup__input_link").value;

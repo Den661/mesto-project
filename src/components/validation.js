@@ -1,4 +1,6 @@
-export {enableValidation, toggleButtonState, hideInputError, hasInvalidInput};
+import {formAddCard} from "../utils/constants";
+
+export {enableValidation, toggleButtonState, hideInputError, hasInvalidInput, resetFormCondition};
 
 function showInputError(formElement, inputElement, errorMessage, inputErrorClass, errorClass) {
   const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
@@ -58,4 +60,9 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
     buttonElement.classList.remove(inactiveButtonClass)
     buttonElement.disabled =false;
   }
+}
+
+function resetFormCondition (inputsAddCardForm, buttonElement) {
+  toggleButtonState(inputsAddCardForm, buttonElement, "popup__button_inactive")
+  inputsAddCardForm.forEach((input) => hideInputError(formAddCard, input, "form__input_invalid", "form__input-error"))
 }

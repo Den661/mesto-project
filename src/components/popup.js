@@ -3,16 +3,19 @@ export {openPopup, closePopup}
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', escClose);
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup')) {
-      closePopup(popup)
-    }
-  })
+  popup.addEventListener('click', closePopupByOverlayClick);
+}
+
+function closePopupByOverlayClick(evt){
+  if (evt.target.classList.contains('popup')) {
+    closePopup(evt.target)
+  }
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', escClose);
+  popup.removeEventListener('click', closePopupByOverlayClick);
 }
 
 function escClose(evt) {

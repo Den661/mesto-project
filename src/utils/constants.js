@@ -17,6 +17,10 @@ export const profileAddPlaceButton = profile.querySelector('.profile__add-button
 export const addPlaceForm = popupAddPlace.querySelector('.form');
 export const popupBigPictureCloseButton = popupBigPicture.querySelector('.popup__close');
 export const placeTemplate = document.querySelector("#place-template").content;
+export const inputsAddCardForm = Array.from(popupAddPlace.querySelectorAll(".form__input"));
+export const formAddCard = popupAddPlace.querySelector(".form")
+
+
 
 export const initialCards = [
   {
