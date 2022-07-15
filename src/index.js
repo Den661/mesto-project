@@ -1,7 +1,7 @@
 import './styles/index.css'
 import {
-  editAvatarForm,
-  popupBioInput,
+  editAvatarForm, inputsEditAvatarForm,
+  popupBioInput, popupCloseButton,
   popupEditAvatar,
   popupNameInput,
   profileAvatar,
@@ -13,14 +13,10 @@ import {createPlaceElement} from "./components/cards";
 import {
   profileEditButton,
   addPlaceForm,
-  popupBigPictureCloseButton,
   profileAddPlaceButton,
-  popupEditProfileCloseButton,
   editProfileForm,
-  popupAddPlaceCloseButton,
   popupAddPlace,
   popupEditProfile,
-  popupBigPicture,
   places,
   inputsAddCardForm,
   formAddCard
@@ -30,23 +26,21 @@ import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from 
 import {renderLoading} from "./utils/utils";
 export let userId
 
-profileEditButton.addEventListener('click', openEditFormHandler);
+profileEditButton.addEventListener('mousedown', openEditFormHandler);
 
-profileAddPlaceButton.addEventListener('click', openAddPlaceHandler);
-
-popupEditProfileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
+profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
 
 editProfileForm.addEventListener('submit', submitEditProfileForm);
 
-popupAddPlaceCloseButton.addEventListener('click', () => closePopup(popupAddPlace));
-
 addPlaceForm.addEventListener('submit', submitAddCardForm);
 
-popupBigPictureCloseButton.addEventListener('click', () => closePopup(popupBigPicture));
-
-profileAvatar.addEventListener('click', openEditAvatarHandler)
+profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
 
 editAvatarForm.addEventListener('submit', submitEditAvatarForm)
+
+popupCloseButton.forEach(button => {
+  const popup = button.closest(".popup")
+  button.addEventListener('mousedown',() => closePopup(popup))})
 
 Promise.all([getInitialCards(), getUserInfo()])
   .then(([places, userData]) => {
@@ -56,6 +50,7 @@ Promise.all([getInitialCards(), getUserInfo()])
     userId = userData._id;
     places.forEach((place) => renderPlace(createPlaceElement(place)));
   })
+  .catch(err => console.log(err))
 
 enableValidation({
   formSelector: '.form',
@@ -84,12 +79,15 @@ function openAddPlaceHandler() {
 }
 
 function openEditAvatarHandler() {
+  const buttonElement = popupEditAvatar.querySelector(".popup__button");
+  editAvatarForm.reset();
+  resetFormCondition(inputsEditAvatarForm, buttonElement)
   openPopup(popupEditAvatar)
 }
 
 function submitEditProfileForm(evt) {
   evt.preventDefault();
-  const button = evt.target.querySelector(".popup__button")
+  const button = evt.submitter;
   renderLoading(true, button)
   editProfile(popupNameInput.value, popupBioInput.value)
     .then((profileData) => {
@@ -105,7 +103,7 @@ function submitAddCardForm(evt) {
   evt.preventDefault();
   const name = evt.target.querySelector(".popup__input_name").value;
   const link = evt.target.querySelector(".popup__input_link").value;
-  const button = evt.target.querySelector(".popup__button");
+  const button = evt.submitter;
   renderLoading(true, button)
   addPlace(name, link)
     .then(place => {
@@ -121,11 +119,12 @@ function submitAddCardForm(evt) {
 function submitEditAvatarForm (evt) {
   evt.preventDefault();
   const link = evt.target.querySelector(".popup__input_link").value;
-  const button = evt.target.querySelector(".popup__button");
+  const button = evt.submitter;
   renderLoading(true, button)
   updateAvatar(link)
     .then( data => {profileAvatar.style.backgroundImage = `URL(${data.avatar})`})
     .then(() => closePopup(evt.target.closest(".popup")))
+    .catch(err => console.log(err))
     .finally(() => renderLoading(false, button, "Сохранить"))
 }
 

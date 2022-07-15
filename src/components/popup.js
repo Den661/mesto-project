@@ -4,8 +4,8 @@ export {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton}
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', escClose);
-  popup.addEventListener('click', closePopupByOverlayClick);
+  document.addEventListener('keydown', handleEscape);
+  popup.addEventListener('mousedown', closePopupByOverlayClick);
 }
 
 function closePopupByOverlayClick(evt){
@@ -16,11 +16,11 @@ function closePopupByOverlayClick(evt){
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', escClose);
-  popup.removeEventListener('click', closePopupByOverlayClick);
+  document.removeEventListener('keydown', handleEscape);
+  popup.removeEventListener('mousedown', closePopupByOverlayClick);
 }
 
-function escClose(evt) {
+function handleEscape(evt) {
   if (evt.key === 'Escape') {
     closePopup(document.querySelector('.popup_opened'))
   }

@@ -23,3 +23,5 @@ export const inputsAddCardForm = Array.from(popupAddPlace.querySelectorAll(".for
 export const formAddCard = popupAddPlace.querySelector(".form");
 export const profileAvatar = document.querySelector(".profile__avatar");
 export const avatarEditButton = document.querySelector(".profile__avatar-overlay")
+export const popupCloseButton = document.querySelectorAll(".popup__close")
+export const inputsEditAvatarForm = Array.from(editAvatarForm.querySelectorAll(".form__input"));

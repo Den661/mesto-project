@@ -14,11 +14,12 @@ function createPlaceElement(place) {
   setLikes(place.likes, placeElement);
   setDeleteButtonState(deleteButton, place.owner._id)
   placeElement.querySelector('.place__like')
-    .addEventListener('click', (evt) => likeHandler(evt, place._id, placeElement));
+    .addEventListener('mousedown', (evt) => likeHandler(evt, place._id, placeElement));
   placeElement.querySelector('.place__delete-button')
-    .addEventListener('click', (evt) => deleteCardHandler(evt.target.parentElement, place._id));
-  imageElement.addEventListener('click', (evt) => openImage(evt.target.src, name));
+    .addEventListener('mousedown', (evt) => deleteCardHandler(evt.target.parentElement, place._id));
+  imageElement.addEventListener('mousedown', (evt) => openImage(evt.target.src, place.name));
   placeElement.querySelector('.place__title').textContent = place.name;
+
   return placeElement;
 }
 
