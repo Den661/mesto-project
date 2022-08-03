@@ -8,6 +8,8 @@ import {addLike, deleteCard, deleteLike} from "./api";
 
 export {createPlaceElement};
 
+const popupImg=new PopupWithImage('.popup_type_image');
+
 function createPlaceElement(place) {
   const placeElement = placeTemplate.querySelector('.place').cloneNode(true);
   const imageElement = placeElement.querySelector('.place__image');
@@ -22,7 +24,6 @@ function createPlaceElement(place) {
     .addEventListener('mousedown', (evt) => deleteCardHandler(evt.target.parentElement, place._id));
  // imageElement.addEventListener('mousedown', (evt) => openImage(evt.target.src, place.name));
  imageElement.addEventListener('mousedown', (evt) => {
-  const popupImg=new PopupWithImage('.popup_type_image');
   popupImg.open(evt.target.src, place.name);
  });
   placeElement.querySelector('.place__title').textContent = place.name;
