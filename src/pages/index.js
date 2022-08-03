@@ -1,4 +1,4 @@
-import './styles/index.css'
+import '../styles/index.css'
 import {
   editAvatarForm, inputsEditAvatarForm,
   popupBioInput, popupCloseButton,
@@ -7,9 +7,9 @@ import {
   profileAvatar,
   profileBio,
   profileName
-} from './utils/constants'
-import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "./components/popup";
-import {createPlaceElement} from "./components/cards";
+} from '../utils/constants'
+import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
+import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
   addPlaceForm,
@@ -20,10 +20,10 @@ import {
   places,
   inputsAddCardForm,
   formAddCard
-} from "./utils/constants";
-import {enableValidation, resetFormCondition} from "./components/validation";
-import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "./components/api";
-import {renderLoading} from "./utils/utils";
+} from "../utils/constants";
+import {enableValidation, resetFormCondition} from "../components/validation";
+import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../components/api";
+import {renderLoading} from "../utils/utils";
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
@@ -81,8 +81,9 @@ function openAddPlaceHandler() {
 function openEditAvatarHandler() {
   const buttonElement = popupEditAvatar.querySelector(".popup__button");
   editAvatarForm.reset();
-  resetFormCondition(inputsEditAvatarForm, buttonElement)
-  openPopup(popupEditAvatar)
+  resetFormCondition(inputsEditAvatarForm, buttonElement);
+  hideEditAvatarButton();
+  openPopup(popupEditAvatar);
 }
 
 function submitEditProfileForm(evt) {

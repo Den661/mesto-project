@@ -1,3 +1,4 @@
+/*
 import {avatarEditButton} from "../utils/constants";
 
 export {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton}
@@ -25,6 +26,7 @@ function handleEscape(evt) {
     closePopup(document.querySelector('.popup_opened'))
   }
 }
+*/
 
 function showEditAvatarButton () {
   avatarEditButton.style.visibility = 'visible';
