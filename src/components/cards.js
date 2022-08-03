@@ -1,5 +1,8 @@
-import {openPopup} from "../Done/popup";
-import {imagePopupPic, imagePopupCaption, popupBigPicture, placeTemplate} from "../utils/constants";
+//import {openPopup} from "../Done/popup";
+//import {imagePopupPic, imagePopupCaption, popupBigPicture, placeTemplate} from "../utils/constants";
+import { placeTemplate} from "../utils/constants";
+import  PopupWithImage from "./PopupWithImage";
+
 import {userId} from "../pages";
 import {addLike, deleteCard, deleteLike} from "./api";
 
@@ -17,7 +20,11 @@ function createPlaceElement(place) {
     .addEventListener('mousedown', (evt) => likeHandler(evt, place._id, placeElement));
   placeElement.querySelector('.place__delete-button')
     .addEventListener('mousedown', (evt) => deleteCardHandler(evt.target.parentElement, place._id));
-  imageElement.addEventListener('mousedown', (evt) => openImage(evt.target.src, place.name));
+ // imageElement.addEventListener('mousedown', (evt) => openImage(evt.target.src, place.name));
+ imageElement.addEventListener('mousedown', (evt) => {
+  const popupImg=new PopupWithImage('.popup__image');
+  popupImg.open(evt.target.src, place.name);
+ });
   placeElement.querySelector('.place__title').textContent = place.name;
 
   return placeElement;
@@ -27,13 +34,13 @@ function removeElement(element) {
   element.remove();
 }
 
-function openImage(src, caption) {
-  imagePopupPic.src = src;
-  imagePopupPic.alt = caption;
-  imagePopupCaption.textContent = caption;
+// function openImage(src, caption) {
+//   imagePopupPic.src = src;
+//   imagePopupPic.alt = caption;
+//   imagePopupCaption.textContent = caption;
 
-  openPopup(popupBigPicture);
-}
+//   openPopup(popupBigPicture);
+// }
 
 function setLikes(likes, card) {
   const likesCounter = card.querySelector(".place__likes-count");
