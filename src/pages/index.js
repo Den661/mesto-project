@@ -38,9 +38,10 @@ profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
 
 editAvatarForm.addEventListener('submit', submitEditAvatarForm)
 
-popupCloseButton.forEach(button => {
-  const popup = button.closest(".popup")
-  button.addEventListener('mousedown',() => closePopup(popup))})
+// popupCloseButton.forEach(button => {
+//   //const popup = button.closest(".popup")
+//   //button.addEventListener('mousedown',() => closePopup(popup))
+// })
 
 Promise.all([getInitialCards(), getUserInfo()])
   .then(([places, userData]) => {
