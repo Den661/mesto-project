@@ -4,7 +4,7 @@ import { placeTemplate} from "../utils/constants";
 import  PopupWithImage from "./PopupWithImage";
 
 import {userId} from "../pages";
-import {addLike, deleteCard, deleteLike} from "./api";
+import {addLike, deleteCard, deleteLike} from "../Done/api";
 
 export {createPlaceElement};
 
