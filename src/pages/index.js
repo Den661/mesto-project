@@ -1,7 +1,7 @@
 import '../styles/index.css'
 import {
   editAvatarForm, inputsEditAvatarForm,
-  popupBioInput, popupCloseButton,
+  popupBioInput,
   popupEditAvatar,
   popupNameInput,
   profileAvatar,
@@ -22,7 +22,7 @@ import {
   formAddCard
 } from "../utils/constants";
 import {enableValidation, resetFormCondition} from "../components/validation";
-import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../components/api";
+import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
 import {renderLoading} from "../utils/utils";
 export let userId
 
