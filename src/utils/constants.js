@@ -1,4 +1,21 @@
-export const popupEditProfile = document.querySelector('.popup_type_profile-edit');
+const popupEditProfile = document.querySelector('.popup_type_profile-edit');
+export const apiConfig = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-12',
+  headers: {
+    authorization: 'f3af3a32-1630-4f2d-93bf-f554187b89c2',
+    'Content-Type': 'application/json'
+  }
+};
+
+export const validationConfig=
+{
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_inactive',
+  inputErrorClass: 'form__input_invalid',
+  errorClass: 'form__input-error'
+}
 export const popupAddPlace = document.querySelector('.popup_type_place-add');
 export const popupBigPicture = document.querySelector('.popup_type_image');
 export const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');

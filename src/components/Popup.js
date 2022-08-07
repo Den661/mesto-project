@@ -31,12 +31,14 @@ export default class Popup {
 
   _handleEscapeClose(evt) {
     if (evt.key === 'Escape') {
+      //TODO уточнить!
       this.close();
     }
   }
 
   _handleClose(evt, selector) {
     if(evt.target.classList.contains(selector) ) {
+      //TODO уточнить!
       this.close();
     }
   }
