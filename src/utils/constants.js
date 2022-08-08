@@ -1,3 +1,5 @@
+import PopupWithImage from "../components/PopupWithImage";
+
 export const popupEditProfile = document.querySelector('.popup_type_profile-edit');
 export const popupAddPlace = document.querySelector('.popup_type_place-add');
 export const popupBigPicture = document.querySelector('.popup_type_image');
@@ -18,10 +20,25 @@ export const profileAddPlaceButton = profile.querySelector('.profile__add-button
 export const addPlaceForm = popupAddPlace.querySelector('.form');
 export const editAvatarForm = popupEditAvatar.querySelector('.form');
 export const popupBigPictureCloseButton = popupBigPicture.querySelector('.popup__close');
-export const placeTemplate = document.querySelector("#place-template").content;
+export const placeTemplate = "#place-template";
 export const inputsAddCardForm = Array.from(popupAddPlace.querySelectorAll(".form__input"));
 export const formAddCard = popupAddPlace.querySelector(".form");
 export const profileAvatar = document.querySelector(".profile__avatar");
 export const avatarEditButton = document.querySelector(".profile__avatar-overlay")
 export const popupCloseButton = document.querySelectorAll(".popup__close")
 export const inputsEditAvatarForm = Array.from(editAvatarForm.querySelectorAll(".form__input"));
+export const deleteButtonSelector =  ".place__delete-button";
+export const likesCounterSelector = ".place__likes-count";
+export const placeImageSelector = ".place__image";
+export const likeSelector = ".place__like";
+export const placeTitleSelector = ".place__title"
+export const placeSelector = ".place"
+export const popupImg=new PopupWithImage('.popup_type_image');
+
+export const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-12',
+  headers: {
+    authorization: 'f3af3a32-1630-4f2d-93bf-f554187b89c2',
+    'Content-Type': 'application/json'
+  }
+}

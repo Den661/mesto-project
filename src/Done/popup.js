@@ -1,8 +1,8 @@
-/*
+
 import {avatarEditButton} from "../utils/constants";
 
-export {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton}
-
+export {showEditAvatarButton, hideEditAvatarButton}
+/*
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', handleEscape);
