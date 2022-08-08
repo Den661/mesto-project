@@ -9,7 +9,6 @@ import {
   profileName,
   placeTemplate, popupImg
 } from '../utils/constants'
-import {createPlaceElement} from "../components/cards";
 //import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
@@ -68,27 +67,32 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
     profileBio.textContent = userData.about;
     profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
     userId = userData._id;
-    places.forEach((place) => {const card =  new Card(placeTemplate, place,
-      () => {
-      if(card.checkUserLiked(card._likes)){
-        api.deleteLike(card._id)
-          .then((data) => card.setLikes(data.likes))
-          .catch(error => console.log(error))
-      } else {
-        api.addLike(card._id)
-          .then((data) => card.setLikes(data.likes))
-          .catch(error => console.log(error))
-      }},
-       () => {
-      api.deleteCard(card._id)
-        .then()
-       },
-       () => {
-      popupImg.open(card._link, card._name)
-       });
+    places.forEach((place) => {const card =  createPlaceElement(place);
       renderPlace(card.generate())});
   })
   .catch(err => console.log(err))
+
+function createPlaceElement(place){
+  const card =  new Card(placeTemplate, place,
+    () => {
+    if(card.checkUserLiked(card._likes)){
+      api.deleteLike(card._id)
+        .then((data) => card.setLikes(data.likes))
+        .catch(error => console.log(error))
+    } else {
+      api.addLike(card._id)
+        .then((data) => card.setLikes(data.likes))
+        .catch(error => console.log(error))
+    }},
+     () => {
+    api.deleteCard(card._id)
+      .then()
+     },
+     () => {
+    popupImg.open(card._link, card._name)
+     });
+     return card;
+    }
 /*
 enableValidation({
   formSelector: '.form',
@@ -136,7 +140,7 @@ function submitEditProfileForm(evt, inputValues) {
       profileName.textContent = profileData.name;
       profileBio.textContent = profileData.about;
     })
-    .then(()=> popupEditProfile.close())
+    .then( popupEditProfile.close())
     .catch(err => console.log(err))
     .finally(() => {popupEditProfile.renderLoading(false)});
 }
@@ -148,7 +152,7 @@ function submitAddCardForm(evt, inputValues) {
     .then(place => {
       return createPlaceElement(place)
     })
-    .then(placeElement => renderPlace(placeElement))
+    .then(placeElement => renderPlace(placeElement.generate()))
     .then(() => popupAddImg.close())
     //.then(() => evt.target.reset())
     .catch(err => console.log(err))
