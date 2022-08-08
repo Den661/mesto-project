@@ -62,7 +62,10 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   }
 }
 
+
+
 function resetFormCondition (inputsAddCardForm, buttonElement) {
   toggleButtonState(inputsAddCardForm, buttonElement, "popup__button_inactive")
   inputsAddCardForm.forEach((input) => hideInputError(formAddCard, input, "form__input_invalid", "form__input-error"))
 }
+

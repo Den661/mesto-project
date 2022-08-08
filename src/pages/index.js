@@ -1,30 +1,42 @@
 import '../styles/index.css'
 import {
   editAvatarForm, inputsEditAvatarForm,
-  popupBioInput,
+  //popupBioInput,
   popupEditAvatar,
-  popupNameInput,
+  //popupNameInput,
   profileAvatar,
   profileBio,
   profileName,
-  placeTemplate, config, popupImg
+  placeTemplate, popupImg
 } from '../utils/constants'
+import {createPlaceElement} from "../components/cards";
 import {showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
 //import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
   addPlaceForm,
   profileAddPlaceButton,
-  editProfileForm,
+  //editProfileForm,
   popupAddPlace,
-  popupEditProfile,
+  //popupEditProfile,
   places,
   inputsAddCardForm,
-  formAddCard
+  formAddCard,
+  apiConfig,
+validationConfig
 } from "../utils/constants";
-import {enableValidation, resetFormCondition} from "../components/validation";
-import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
+import  PopupWithForm from "../components/PopupWithForm";
+import  FormValidator  from "../components/FormValidator";
+const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
+const profileEditValidation= enableFormValidation(popupEditProfile);
+
+//import {enableValidation, resetFormCondition} from "../components/validation";
+import {addPlace, //editProfile,
+   getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
+import  Api from "../components/Api";
+const api = new Api(apiConfig);
 import {renderLoading} from "../utils/utils";
+import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
 import Card from "../components/Card";
 import Api from "../components/Api";
 export let userId
@@ -33,7 +45,7 @@ profileEditButton.addEventListener('mousedown', openEditFormHandler);
 
 profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
 
-editProfileForm.addEventListener('submit', submitEditProfileForm);
+//editProfileForm.addEventListener('submit', submitEditProfileForm);
 
 addPlaceForm.addEventListener('submit', submitAddCardForm);
 
@@ -46,7 +58,7 @@ editAvatarForm.addEventListener('submit', submitEditAvatarForm)
 //   //button.addEventListener('mousedown',() => closePopup(popup))
 // })
 
-const api  = new Api(config);
+const api  = new Api(apiConfig);
 
 Promise.all([getInitialCards(), getUserInfo()])
   .then(([places, userData]) => {
@@ -75,7 +87,7 @@ Promise.all([getInitialCards(), getUserInfo()])
       renderPlace(card.generate())});
   })
   .catch(err => console.log(err))
-
+/*
 enableValidation({
   formSelector: '.form',
   inputSelector: '.form__input',
@@ -84,15 +96,34 @@ enableValidation({
   inputErrorClass: 'form__input_invalid',
   errorClass: 'form__input-error'
 });
+*/
+function enableFormValidation(popupWithForm){
+  const validation=new FormValidator(validationConfig, popupWithForm.getForm());
+  validation.enableValidation();
+  return validation;
+}
 
 function renderPlace(placeElement) {
   places.prepend(placeElement);
 }
 
 function openEditFormHandler() {
-  popupNameInput.value = profileName.textContent;
-  popupBioInput.value = profileBio.textContent
-  openPopup(popupEditProfile);
+  profileEditValidation.resetFormCondition();
+  popupEditProfile.open(profileName.textContent, profileBio.textContent);
+}
+
+function submitEditProfileForm(evt, inputValues) {
+  evt.preventDefault();
+  const button = evt.submitter;
+  renderLoading(true, button);
+  api.editProfile(inputValues)
+    .then((profileData) => {
+      profileName.textContent = profileData.name;
+      profileBio.textContent = profileData.about;
+    })
+    .then(popupEditProfile.close())
+    .catch(err => console.log(err))
+    .finally(() => {renderLoading(false, button, "Создать")})
 }
 
 function openAddPlaceHandler() {
@@ -110,6 +141,7 @@ function openEditAvatarHandler() {
   openPopup(popupEditAvatar);
 }
 
+/*
 function submitEditProfileForm(evt) {
   evt.preventDefault();
   const button = evt.submitter;
@@ -122,7 +154,7 @@ function submitEditProfileForm(evt) {
     .then(() => closePopup(evt.target.closest(".popup")))
     .catch(err => console.log(err))
     .finally(() => {renderLoading(false, button, "Создать")})
-}
+}*/
 
 function submitAddCardForm(evt) {
   evt.preventDefault();
