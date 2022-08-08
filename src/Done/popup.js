@@ -1,7 +1,7 @@
 /*
 import {avatarEditButton} from "../utils/constants";
 
-export {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton}
+export {showEditAvatarButton, hideEditAvatarButton}
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
@@ -26,7 +26,7 @@ function handleEscape(evt) {
     closePopup(document.querySelector('.popup_opened'))
   }
 }
-*/
+
 
 function showEditAvatarButton () {
   avatarEditButton.style.visibility = 'visible';
@@ -37,3 +37,4 @@ function hideEditAvatarButton () {
   avatarEditButton.style.visibility = 'hidden';
   avatarEditButton.style.opacity = 0;
 }
+*/

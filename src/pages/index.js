@@ -6,9 +6,11 @@ import {
   //popupNameInput,
   profileAvatar,
   profileBio,
-  profileName
+  profileName,
+  placeTemplate, popupImg
 } from '../utils/constants'
 import {createPlaceElement} from "../components/cards";
+//import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
   //addPlaceForm,
@@ -34,11 +36,12 @@ const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAv
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
 
 //import {enableValidation, resetFormCondition} from "../components/validation";
+
 //import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
 import  Api from "../components/Api";
 const api = new Api(apiConfig);
-//import {renderLoading} from "../utils/utils";
-//import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
+import Card from "../components/Card";
+
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
@@ -58,13 +61,32 @@ profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
 //   //button.addEventListener('mousedown',() => closePopup(popup))
 // })
 
+
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
     profileName.textContent = userData.name;
     profileBio.textContent = userData.about;
     profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
     userId = userData._id;
-    places.forEach((place) => renderPlace(createPlaceElement(place)));
+    places.forEach((place) => {const card =  new Card(placeTemplate, place,
+      () => {
+      if(card.checkUserLiked(card._likes)){
+        api.deleteLike(card._id)
+          .then((data) => card.setLikes(data.likes))
+          .catch(error => console.log(error))
+      } else {
+        api.addLike(card._id)
+          .then((data) => card.setLikes(data.likes))
+          .catch(error => console.log(error))
+      }},
+       () => {
+      api.deleteCard(card._id)
+        .then()
+       },
+       () => {
+      popupImg.open(card._link, card._name)
+       });
+      renderPlace(card.generate())});
   })
   .catch(err => console.log(err))
 /*
@@ -114,7 +136,7 @@ function submitEditProfileForm(evt, inputValues) {
       profileName.textContent = profileData.name;
       profileBio.textContent = profileData.about;
     })
-    .then(popupEditProfile.close())
+    .then(()=> popupEditProfile.close())
     .catch(err => console.log(err))
     .finally(() => {popupEditProfile.renderLoading(false)});
 }
