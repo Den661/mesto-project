@@ -10,7 +10,6 @@ import {
   placeTemplate, popupImg
 } from '../utils/constants'
 import {createPlaceElement} from "../components/cards";
-import {showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
 //import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
@@ -33,12 +32,10 @@ const profileEditValidation= enableFormValidation(popupEditProfile);
 //import {enableValidation, resetFormCondition} from "../components/validation";
 import {addPlace, //editProfile,
    getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
-import  Api from "../components/Api";
-const api = new Api(apiConfig);
-import {renderLoading} from "../utils/utils";
-import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
-import Card from "../components/Card";
 import Api from "../components/Api";
+import {renderLoading} from "../utils/utils";
+import {showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
+import Card from "../components/Card";
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
@@ -121,7 +118,7 @@ function submitEditProfileForm(evt, inputValues) {
       profileName.textContent = profileData.name;
       profileBio.textContent = profileData.about;
     })
-    .then(popupEditProfile.close())
+    .then(()=> popupEditProfile.close())
     .catch(err => console.log(err))
     .finally(() => {renderLoading(false, button, "Создать")})
 }
