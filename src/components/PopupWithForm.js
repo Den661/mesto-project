@@ -4,14 +4,8 @@ import  Popup from "./Popup";
 export default class PopupWithForm extends Popup{
   constructor(popupSelector, submitFunction) {
     super(popupSelector);
-    this._submitFunction=submitFunction;
+    this._submitFunction=(evt)=>{submitFunction( evt,this._getInputValues());};
     this._form=this._popup.querySelector('.form');
- }
-
- open(name, about) {
-  this._form.querySelector('.popup__input_name').value = name;
-  this._form.querySelector('.popup__input_bio').value = about;
-  super.open();
  }
 
  close()
@@ -22,11 +16,25 @@ export default class PopupWithForm extends Popup{
 
  setEventListeners() {
   super.setEventListeners();
-  this._form.addEventListener('submit', (evt)=>{this._submitFunction( evt,this._getInputValues());});
+  this._form.addEventListener('submit', this._submitFunction);
  }
 
 getForm() {
   return this._form;
+}
+
+renderLoading(isLoading, text="Сохранить"){
+  const button =this._form.querySelector('.popup__button');
+  if (isLoading){
+    button.textContent = "Сохранение...";
+  }else {
+    button.textContent = text;
+  }
+}
+
+_removeEventListeners() {
+  super._removeEventListeners();
+  this._form.removeEventListener('submit', this._submitFunction);
 }
 
 _getInputValues(){
@@ -35,12 +43,6 @@ _getInputValues(){
   return inputList.reduce((prevVal, item)=>{prevVal[item.name]=item.value; return prevVal;},{});
 }
 
-_renderLoading(isLoading, button, text){
-  if (isLoading){
-    button.textContent = "Сохранение...";
-  }else {
-    button.textContent = text;
-  }
-}
+
 
 }

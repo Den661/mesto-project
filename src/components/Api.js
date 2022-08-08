@@ -12,6 +12,13 @@ export default class Api {
     }
   }
 
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
+    })
+      .then(res => {return this._checkResponse(res)});
+  }
+
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
@@ -66,7 +73,7 @@ export default class Api {
       .then(res => {return this._checkResponse(res)})
   }
 
-  updateAvatar(link) {
+  updateAvatar({link}) {
     return fetch (`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,

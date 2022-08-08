@@ -1,8 +1,8 @@
 import '../styles/index.css'
 import {
-  editAvatarForm, inputsEditAvatarForm,
+  //editAvatarForm, inputsEditAvatarForm,
   //popupBioInput,
-  popupEditAvatar,
+  //popupEditAvatar,
   //popupNameInput,
   profileAvatar,
   profileBio,
@@ -11,29 +11,34 @@ import {
 import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
-  addPlaceForm,
+  //addPlaceForm,
   profileAddPlaceButton,
   //editProfileForm,
-  popupAddPlace,
+  //popupAddPlace,
   //popupEditProfile,
   places,
-  inputsAddCardForm,
-  formAddCard,
+  //inputsAddCardForm,
+  //formAddCard,
+  avatarEditButton,
   apiConfig,
 validationConfig
 } from "../utils/constants";
 import  PopupWithForm from "../components/PopupWithForm";
 import  FormValidator  from "../components/FormValidator";
+
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
-const profileEditValidation= enableFormValidation(popupEditProfile);
+const profileEditValidation = enableFormValidation(popupEditProfile);
+const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm);
+const addImgValidation = enableFormValidation(popupAddImg);
+const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAvatarForm);
+const editAvatarValidation = enableFormValidation(popupEditAvatar);
 
 //import {enableValidation, resetFormCondition} from "../components/validation";
-import {addPlace, //editProfile,
-   getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
+//import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
 import  Api from "../components/Api";
 const api = new Api(apiConfig);
-import {renderLoading} from "../utils/utils";
-import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
+//import {renderLoading} from "../utils/utils";
+//import {openPopup, closePopup, showEditAvatarButton, hideEditAvatarButton} from "../Done/popup";
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
@@ -42,18 +47,18 @@ profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
 
 //editProfileForm.addEventListener('submit', submitEditProfileForm);
 
-addPlaceForm.addEventListener('submit', submitAddCardForm);
+//addPlaceForm.addEventListener('submit', submitAddCardForm);
 
 profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
 
-editAvatarForm.addEventListener('submit', submitEditAvatarForm)
+//editAvatarForm.addEventListener('submit', submitEditAvatarForm)
 
 // popupCloseButton.forEach(button => {
 //   //const popup = button.closest(".popup")
 //   //button.addEventListener('mousedown',() => closePopup(popup))
 // })
 
-Promise.all([getInitialCards(), getUserInfo()])
+Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
     profileName.textContent = userData.name;
     profileBio.textContent = userData.about;
@@ -84,13 +89,26 @@ function renderPlace(placeElement) {
 
 function openEditFormHandler() {
   profileEditValidation.resetFormCondition();
-  popupEditProfile.open(profileName.textContent, profileBio.textContent);
+  const profileForm=popupEditProfile.getForm();
+  profileForm.querySelector('.popup__input_name').value = profileName.textContent;
+  profileForm.querySelector('.popup__input_bio').value =  profileBio.textContent;
+  popupEditProfile.open();
+}
+
+function openAddPlaceHandler() {
+  addImgValidation.resetFormCondition();
+  popupAddImg.open();
+}
+
+function openEditAvatarHandler() {
+  editAvatarValidation.resetFormCondition();
+  hideEditAvatarButton();
+  popupEditAvatar.open();
 }
 
 function submitEditProfileForm(evt, inputValues) {
   evt.preventDefault();
-  const button = evt.submitter;
-  renderLoading(true, button);
+  popupEditProfile.renderLoading(true);
   api.editProfile(inputValues)
     .then((profileData) => {
       profileName.textContent = profileData.name;
@@ -98,68 +116,42 @@ function submitEditProfileForm(evt, inputValues) {
     })
     .then(popupEditProfile.close())
     .catch(err => console.log(err))
-    .finally(() => {renderLoading(false, button, "Создать")})
+    .finally(() => {popupEditProfile.renderLoading(false)});
 }
 
-function openAddPlaceHandler() {
-  const buttonElement = popupAddPlace.querySelector(".popup__button");
-  formAddCard.reset();
-  resetFormCondition(inputsAddCardForm, buttonElement);
-  openPopup(popupAddPlace);
-}
-
-function openEditAvatarHandler() {
-  const buttonElement = popupEditAvatar.querySelector(".popup__button");
-  editAvatarForm.reset();
-  resetFormCondition(inputsEditAvatarForm, buttonElement);
-  hideEditAvatarButton();
-  openPopup(popupEditAvatar);
-}
-
-/*
-function submitEditProfileForm(evt) {
+function submitAddCardForm(evt, inputValues) {
   evt.preventDefault();
-  const button = evt.submitter;
-  renderLoading(true, button)
-  editProfile(popupNameInput.value, popupBioInput.value)
-    .then((profileData) => {
-      profileName.textContent = profileData.name;
-      profileBio.textContent = profileData.about;
-    })
-    .then(() => closePopup(evt.target.closest(".popup")))
-    .catch(err => console.log(err))
-    .finally(() => {renderLoading(false, button, "Создать")})
-}*/
-
-function submitAddCardForm(evt) {
-  evt.preventDefault();
-  const name = evt.target.querySelector(".popup__input_name").value;
-  const link = evt.target.querySelector(".popup__input_link").value;
-  const button = evt.submitter;
-  renderLoading(true, button)
-  addPlace(name, link)
+  popupAddImg.renderLoading(true);
+  api.addPlace(inputValues)
     .then(place => {
       return createPlaceElement(place)
     })
     .then(placeElement => renderPlace(placeElement))
-    .then(() => closePopup(evt.target.closest(".popup")))
-    .then(() => evt.target.reset())
+    .then(() => popupAddImg.close())
+    //.then(() => evt.target.reset())
     .catch(err => console.log(err))
-    .finally(() => {renderLoading(false, button, "Создать")})
+    .finally(() => {popupAddImg.renderLoading(false,  "Создать")})
 }
 
-function submitEditAvatarForm (evt) {
+function submitEditAvatarForm (evt, inputValues) {
   evt.preventDefault();
-  const link = evt.target.querySelector(".popup__input_link").value;
-  const button = evt.submitter;
-  renderLoading(true, button)
-  updateAvatar(link)
+  popupEditAvatar.renderLoading(true)
+  api.updateAvatar(inputValues)
     .then( data => {profileAvatar.style.backgroundImage = `URL(${data.avatar})`})
-    .then(() => closePopup(evt.target.closest(".popup")))
+    .then(() => popupEditAvatar.close())
     .catch(err => console.log(err))
-    .finally(() => renderLoading(false, button, "Сохранить"))
+    .finally(() => popupEditAvatar.renderLoading(false, "Сохранить"))
 }
 
+function showEditAvatarButton () {
+  avatarEditButton.style.visibility = 'visible';
+  avatarEditButton.style.opacity = '1';
+}
+
+function hideEditAvatarButton () {
+  avatarEditButton.style.visibility = 'hidden';
+  avatarEditButton.style.opacity = 0;
+}
 
 
 profileAvatar.addEventListener('mouseover', showEditAvatarButton);
