@@ -1,31 +1,20 @@
 import '../styles/index.css'
 import {
-  //editAvatarForm, inputsEditAvatarForm,
-  //popupBioInput,
-  //popupEditAvatar,
-  //popupNameInput,
   profileAvatar,
-  profileBio,
-  profileName,
-  placeTemplate, popupImg
+  placeTemplate, popupImg,
+  userInfoConfig
 } from '../utils/constants'
-//import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
-  //addPlaceForm,
   profileAddPlaceButton,
-  //editProfileForm,
-  //popupAddPlace,
-  //popupEditProfile,
   places,
-  //inputsAddCardForm,
-  //formAddCard,
   avatarEditButton,
   apiConfig,
 validationConfig
 } from "../utils/constants";
 import  PopupWithForm from "../components/PopupWithForm";
 import  FormValidator  from "../components/FormValidator";
+import UserInfo from "../components/UserInfo";
 
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
 const profileEditValidation = enableFormValidation(popupEditProfile);
@@ -33,38 +22,24 @@ const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm
 const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAvatarForm);
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
+const userInfo= new UserInfo(userInfoConfig);
 
-//import {enableValidation, resetFormCondition} from "../components/validation";
 
-//import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
 import  Api from "../components/Api";
 const api = new Api(apiConfig);
 import Card from "../components/Card";
 
+
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
-
 profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
-
-//editProfileForm.addEventListener('submit', submitEditProfileForm);
-
-//addPlaceForm.addEventListener('submit', submitAddCardForm);
-
 profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
-
-//editAvatarForm.addEventListener('submit', submitEditAvatarForm)
-
-// popupCloseButton.forEach(button => {
-//   //const popup = button.closest(".popup")
-//   //button.addEventListener('mousedown',() => closePopup(popup))
-// })
 
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
-    profileName.textContent = userData.name;
-    profileBio.textContent = userData.about;
+    userInfo.setUserInfo(userData);
     profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
     userId = userData._id;
     places.forEach((place) => {const card =  createPlaceElement(place);
@@ -93,16 +68,7 @@ function createPlaceElement(place){
      });
      return card;
     }
-/*
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'form__input_invalid',
-  errorClass: 'form__input-error'
-});
-*/
+
 function enableFormValidation(popupWithForm){
   const validation=new FormValidator(validationConfig, popupWithForm.getForm());
   validation.enableValidation();
@@ -116,8 +82,9 @@ function renderPlace(placeElement) {
 function openEditFormHandler() {
   profileEditValidation.resetFormCondition();
   const profileForm=popupEditProfile.getForm();
-  profileForm.querySelector('.popup__input_name').value = profileName.textContent;
-  profileForm.querySelector('.popup__input_bio').value =  profileBio.textContent;
+  const userInfoData=userInfo.getUserInfo();
+  profileForm.querySelector('.popup__input_name').value = userInfoData.name;
+  profileForm.querySelector('.popup__input_bio').value =  userInfoData.about;
   popupEditProfile.open();
 }
 
@@ -137,8 +104,7 @@ function submitEditProfileForm(evt, inputValues) {
   popupEditProfile.renderLoading(true);
   api.editProfile(inputValues)
     .then((profileData) => {
-      profileName.textContent = profileData.name;
-      profileBio.textContent = profileData.about;
+      userInfo.setUserInfo(profileData);
     })
     .then( popupEditProfile.close())
     .catch(err => console.log(err))
@@ -154,7 +120,6 @@ function submitAddCardForm(evt, inputValues) {
     })
     .then(placeElement => renderPlace(placeElement.generate()))
     .then(() => popupAddImg.close())
-    //.then(() => evt.target.reset())
     .catch(err => console.log(err))
     .finally(() => {popupAddImg.renderLoading(false,  "Создать")})
 }
