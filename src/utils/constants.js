@@ -17,14 +17,21 @@ export const validationConfig=
   inputErrorClass: 'form__input_invalid',
   errorClass: 'form__input-error'
 }
+
+export const userInfoConfig=
+{
+  nameSelector: '.profile__name',
+  aboutSelector: '.profile__bio'
+}
+
 export const popupAddPlace = document.querySelector('.popup_type_place-add');
 export const popupBigPicture = document.querySelector('.popup_type_image');
 export const popupEditAvatar = document.querySelector('.popup_type_edit-avatar');
 //export const imagePopupPic = popupBigPicture.querySelector('.popup__image');
 //export const imagePopupCaption = popupBigPicture.querySelector('.popup__figcaption');
 export const profile = document.querySelector('.profile');
-export const profileName = profile.querySelector('.profile__name');
-export const profileBio = profile.querySelector('.profile__bio');
+//export const profileName = profile.querySelector('.profile__name');
+//export const profileBio = profile.querySelector('.profile__bio');
 export const popupNameInput = popupEditProfile.querySelector(".popup__input_name");
 export const popupBioInput = popupEditProfile.querySelector(".popup__input_bio");
 export const places = document.querySelector('.places__list');

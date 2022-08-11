@@ -1,19 +1,20 @@
 import '../styles/index.css'
 import {
   profileAvatar,
-  profileBio,
-  profileName,
-  placeTemplate, popupImg
+  placeTemplate, popupImg,
+  userInfoConfig
 } from '../utils/constants'
 import {
   profileEditButton,
   profileAddPlaceButton,
+  places,
   avatarEditButton,
   apiConfig,
 validationConfig
 } from "../utils/constants";
 import  PopupWithForm from "../components/PopupWithForm";
 import  FormValidator  from "../components/FormValidator";
+import UserInfo from "../components/UserInfo";
 
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
 const profileEditValidation = enableFormValidation(popupEditProfile);
@@ -21,13 +22,13 @@ const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm
 const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAvatarForm);
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
+const userInfo= new UserInfo(userInfoConfig);
 
 const placesSection = new Section({items:[],
   renderer:(item) => {
     const place = createPlaceElement(item).generate();
     placesSection.appendElement(place)
 }},'.places__list')
-
 
 
 import  Api from "../components/Api";
@@ -38,15 +39,13 @@ import Section from "../components/Section";
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
-
 profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
-
 profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
+
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
-    profileName.textContent = userData.name;
-    profileBio.textContent = userData.about;
+    userInfo.setUserInfo(userData);
     profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
     userId = userData._id;
     placesSection.setItems(places);
@@ -75,16 +74,7 @@ function createPlaceElement(place){
      });
      return card;
     }
-/*
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_inactive',
-  inputErrorClass: 'form__input_invalid',
-  errorClass: 'form__input-error'
-});
-*/
+
 function enableFormValidation(popupWithForm){
   const validation=new FormValidator(validationConfig, popupWithForm.getForm());
   validation.enableValidation();
@@ -94,8 +84,9 @@ function enableFormValidation(popupWithForm){
 function openEditFormHandler() {
   profileEditValidation.resetFormCondition();
   const profileForm=popupEditProfile.getForm();
-  profileForm.querySelector('.popup__input_name').value = profileName.textContent;
-  profileForm.querySelector('.popup__input_bio').value =  profileBio.textContent;
+  const userInfoData=userInfo.getUserInfo();
+  profileForm.querySelector('.popup__input_name').value = userInfoData.name;
+  profileForm.querySelector('.popup__input_bio').value =  userInfoData.about;
   popupEditProfile.open();
 }
 
@@ -115,8 +106,7 @@ function submitEditProfileForm(evt, inputValues) {
   popupEditProfile.renderLoading(true);
   api.editProfile(inputValues)
     .then((profileData) => {
-      profileName.textContent = profileData.name;
-      profileBio.textContent = profileData.about;
+      userInfo.setUserInfo(profileData);
     })
     .then(() => popupEditProfile.close())
     .catch(err => console.log(err))
