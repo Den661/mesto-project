@@ -1,4 +1,4 @@
-.place__like{
+.place__like {
   cursor: pointer;
   background-image: url(../../../images/like.svg);
   box-sizing: content-box;
@@ -12,6 +12,6 @@
   padding: 0;
 }
 
-.place__like:hover{
+.place__like:hover {
   opacity: 0.5;
 }

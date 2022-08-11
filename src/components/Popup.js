@@ -3,12 +3,18 @@ import {popupClosedClass, popupOpenedClass} from "../utils/constants";
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._closeByOverlay =(evt)=>{ this._handleClose(evt, popupOpenedClass);};
-    this._closeByX =(evt)=>{ this._handleClose(evt, popupClosedClass);};
-    this._closeByEscFunction = (evt)=>{ this._handleEscapeClose(evt);};
+    this._closeByOverlay = (evt) => {
+      this._handleClose(evt, popupOpenedClass);
+    };
+    this._closeByX = (evt) => {
+      this._handleClose(evt, popupClosedClass);
+    };
+    this._closeByEscFunction = (evt) => {
+      this._handleEscapeClose(evt);
+    };
   }
 
- open() {
+  open() {
     this._popup.classList.add(popupOpenedClass);
     this.setEventListeners();
   }
@@ -19,27 +25,25 @@ export default class Popup {
   }
 
   setEventListeners() {
-    document.addEventListener('keydown',this._closeByEscFunction);
-    this._popup.addEventListener('click',this._closeByOverlay);
+    document.addEventListener('keydown', this._closeByEscFunction);
+    this._popup.addEventListener('click', this._closeByOverlay);
     this._popup.addEventListener('click', this._closeByX);
   }
 
   _removeEventListeners() {
-    document.removeEventListener('keydown',this._closeByEscFunction);
-    this._popup.removeEventListener('click',this._closeByOverlay);
+    document.removeEventListener('keydown', this._closeByEscFunction);
+    this._popup.removeEventListener('click', this._closeByOverlay);
     this._popup.removeEventListener('click', this._closeByX);
   }
 
   _handleEscapeClose(evt) {
     if (evt.key === 'Escape') {
-      //TODO уточнить!
       this.close();
     }
   }
 
   _handleClose(evt, selector) {
-    if(evt.target.classList.contains(selector) ) {
-      //TODO уточнить!
+    if (evt.target.classList.contains(selector)) {
       this.close();
     }
   }

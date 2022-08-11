@@ -19,8 +19,8 @@ export default class Card {
     this._clickHandler = clickHandler;
   }
 
-  _getCardTemplate (){
-     return document.querySelector(this._templateSelector)
+  _getCardTemplate() {
+    return document.querySelector(this._templateSelector)
       .content.querySelector(placeSelector)
       .cloneNode(true);
   }
@@ -29,7 +29,7 @@ export default class Card {
     const card = this._getCardTemplate();
     this._cardImage = card.querySelector(placeImageSelector);
     this._cardDeleteButton = card.querySelector(deleteButtonSelector);
-    this._likeElement =  card.querySelector(likeSelector);
+    this._likeElement = card.querySelector(likeSelector);
     this._likesCounter = card.querySelector(likesCounterSelector);
     this._cardTitle = card.querySelector(placeTitleSelector)
     this._setDeleteButtonState(this._cardDeleteButton, this._ownerId);
@@ -41,6 +41,7 @@ export default class Card {
 
     return card;
   }
+
   setLikes(likes) {
     this._likes = likes;
     this._likesCounter.textContent = likes.length;
@@ -74,8 +75,14 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._likeElement.addEventListener("click", () => {this._handleLike()})
-    this._cardDeleteButton.addEventListener("click", (evt) => {this._handleDelete(evt)})
-    this._cardImage.addEventListener("click", () => {this._handleClick()})
+    this._likeElement.addEventListener("click", () => {
+      this._handleLike()
+    })
+    this._cardDeleteButton.addEventListener("click", (evt) => {
+      this._handleDelete(evt)
+    })
+    this._cardImage.addEventListener("click", () => {
+      this._handleClick()
+    })
   }
 }

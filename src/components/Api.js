@@ -16,14 +16,18 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(res => {return this._checkResponse(res)});
+      .then(res => {
+        return this._checkResponse(res)
+      });
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 
   editProfile({name, about}) {
@@ -35,9 +39,12 @@ export default class Api {
         about: about
       })
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
-  addPlace({name, link}){
+
+  addPlace({name, link}) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -46,41 +53,51 @@ export default class Api {
         link: link
       })
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 
-  deleteCard (cardId){
-    return fetch (`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 
   addLike(cardId) {
-    return fetch (`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 
   deleteLike(cardId) {
-    return fetch (`${this._baseUrl}/cards/likes/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 
   updateAvatar({link}) {
-    return fetch (`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: link
       })
     })
-      .then(res => {return this._checkResponse(res)})
+      .then(res => {
+        return this._checkResponse(res)
+      })
   }
 }
