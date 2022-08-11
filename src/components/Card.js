@@ -11,7 +11,7 @@ export default class Card {
     this._templateSelector = templateSelector;
     this._name = name;
     this._link = link;
-    this._ownerId = owner.id;
+    this._ownerId = owner._id;
     this._likes = likes;
     this._id = _id;
     this._likeHandler = likeHandler;
@@ -65,8 +65,8 @@ export default class Card {
     this._likeHandler()
   }
 
-  _handleDelete() {
-    this._deleteHandler();
+  _handleDelete(evt) {
+    this._deleteHandler(evt);
   }
 
   _handleClick() {
@@ -75,7 +75,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeElement.addEventListener("click", () => {this._handleLike()})
-    this._cardDeleteButton.addEventListener("click", () => {this._handleDelete()})
+    this._cardDeleteButton.addEventListener("click", (evt) => {this._handleDelete(evt)})
     this._cardImage.addEventListener("click", () => {this._handleClick()})
   }
 }

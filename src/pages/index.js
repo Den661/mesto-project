@@ -1,25 +1,13 @@
 import '../styles/index.css'
 import {
-  //editAvatarForm, inputsEditAvatarForm,
-  //popupBioInput,
-  //popupEditAvatar,
-  //popupNameInput,
   profileAvatar,
   profileBio,
   profileName,
   placeTemplate, popupImg
 } from '../utils/constants'
-//import {createPlaceElement} from "../components/cards";
 import {
   profileEditButton,
-  //addPlaceForm,
   profileAddPlaceButton,
-  //editProfileForm,
-  //popupAddPlace,
-  //popupEditProfile,
-  places,
-  //inputsAddCardForm,
-  //formAddCard,
   avatarEditButton,
   apiConfig,
 validationConfig
@@ -34,12 +22,18 @@ const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAvatarForm);
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
 
-//import {enableValidation, resetFormCondition} from "../components/validation";
+const placesSection = new Section({items:[],
+  renderer:(item) => {
+    const place = createPlaceElement(item).generate();
+    placesSection.appendElement(place)
+}},'.places__list')
 
-//import {addPlace, editProfile, getInitialCards, getUserInfo, updateAvatar} from "../Done/api";
+
+
 import  Api from "../components/Api";
 const api = new Api(apiConfig);
 import Card from "../components/Card";
+import Section from "../components/Section";
 
 export let userId
 
@@ -47,19 +41,7 @@ profileEditButton.addEventListener('mousedown', openEditFormHandler);
 
 profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
 
-//editProfileForm.addEventListener('submit', submitEditProfileForm);
-
-//addPlaceForm.addEventListener('submit', submitAddCardForm);
-
 profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
-
-//editAvatarForm.addEventListener('submit', submitEditAvatarForm)
-
-// popupCloseButton.forEach(button => {
-//   //const popup = button.closest(".popup")
-//   //button.addEventListener('mousedown',() => closePopup(popup))
-// })
-
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
@@ -67,8 +49,8 @@ Promise.all([api.getInitialCards(), api.getUserInfo()])
     profileBio.textContent = userData.about;
     profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
     userId = userData._id;
-    places.forEach((place) => {const card =  createPlaceElement(place);
-      renderPlace(card.generate())});
+    placesSection.setItems(places);
+    placesSection.renderItems()
   })
   .catch(err => console.log(err))
 
@@ -84,9 +66,9 @@ function createPlaceElement(place){
         .then((data) => card.setLikes(data.likes))
         .catch(error => console.log(error))
     }},
-     () => {
-    api.deleteCard(card._id)
-      .then()
+     (evt) => {
+    api.deleteCard(card._id).
+    then(() => evt.target.closest(".place").remove())
      },
      () => {
     popupImg.open(card._link, card._name)
@@ -107,10 +89,6 @@ function enableFormValidation(popupWithForm){
   const validation=new FormValidator(validationConfig, popupWithForm.getForm());
   validation.enableValidation();
   return validation;
-}
-
-function renderPlace(placeElement) {
-  places.prepend(placeElement);
 }
 
 function openEditFormHandler() {
@@ -140,7 +118,7 @@ function submitEditProfileForm(evt, inputValues) {
       profileName.textContent = profileData.name;
       profileBio.textContent = profileData.about;
     })
-    .then( popupEditProfile.close())
+    .then(() => popupEditProfile.close())
     .catch(err => console.log(err))
     .finally(() => {popupEditProfile.renderLoading(false)});
 }
@@ -152,9 +130,8 @@ function submitAddCardForm(evt, inputValues) {
     .then(place => {
       return createPlaceElement(place)
     })
-    .then(placeElement => renderPlace(placeElement.generate()))
+    .then(placeElement => placesSection.prependElement(placeElement.generate()))
     .then(() => popupAddImg.close())
-    //.then(() => evt.target.reset())
     .catch(err => console.log(err))
     .finally(() => {popupAddImg.renderLoading(false,  "Создать")})
 }

@@ -1,10 +1,10 @@
 //import {openPopup} from "../Done/popup";
 //import {imagePopupPic, imagePopupCaption, popupBigPicture, placeTemplate} from "../utils/constants";
 import { placeTemplate} from "../utils/constants";
-import  PopupWithImage from "./PopupWithImage";
+import  PopupWithImage from "../components/PopupWithImage";
 
 import {userId} from "../pages";
-import {addLike, deleteCard, deleteLike} from "../Done/api";
+import {addLike, deleteCard, deleteLike} from "./api";
 
 export {createPlaceElement};
 
