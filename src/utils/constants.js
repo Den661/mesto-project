@@ -1,4 +1,4 @@
-import PopupWithImage from "../components/PopupWithImage";
+
 const popupEditProfile = document.querySelector('.popup_type_profile-edit');
 export const apiConfig = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-12',
@@ -56,4 +56,4 @@ export const placeImageSelector = ".place__image";
 export const likeSelector = ".place__like";
 export const placeTitleSelector = ".place__title"
 export const placeSelector = ".place"
-export const popupImg=new PopupWithImage('.popup_type_image');
+
