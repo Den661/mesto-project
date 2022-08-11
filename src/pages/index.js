@@ -1,23 +1,29 @@
-import '../styles/index.css'
+//#region imports
+import '../styles/index.css';
 import {
   profileAvatar,
-  placeTemplate, popupImg,
-  userInfoConfig
-} from '../utils/constants'
-import {
+  placeTemplate,
+  userInfoConfig,
   profileEditButton,
   profileAddPlaceButton,
+  avatarEditButton,
   apiConfig,
-validationConfig
+  validationConfig
 } from "../utils/constants";
 import  PopupWithForm from "../components/PopupWithForm";
 import  FormValidator  from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
-import  Api from "../components/Api";
 import Card from "../components/Card";
 import Section from "../components/Section";
-import {hideEditAvatarButton, showEditAvatarButton} from "../utils/utils";
+import  Api from "../components/Api";
+import PopupWithImage from "../components/PopupWithImage";
+//#endregion
 
+//#region exports
+export let userId;
+//#endregion
+
+//#region constants
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
 const profileEditValidation = enableFormValidation(popupEditProfile);
 const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm);
@@ -25,31 +31,24 @@ const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar',submitEditAvatarForm);
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
 const userInfo= new UserInfo(userInfoConfig);
-
+const api = new Api(apiConfig);
+const popupImg = new PopupWithImage('.popup_type_image');
 const placesSection = new Section({items:[],
   renderer:(item) => {
     const place = createPlaceElement(item).generate();
     placesSection.appendElement(place)
-}},'.places__list')
+}},'.places__list');
+//#endregion
 
-const api = new Api(apiConfig);
-export let userId
-
+//#region EventListeners
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
 profileAddPlaceButton.addEventListener('mousedown', openAddPlaceHandler);
-profileAvatar.addEventListener('mousedown', openEditAvatarHandler)
+profileAvatar.addEventListener('mousedown', openEditAvatarHandler);
+profileAvatar.addEventListener('mouseover', showEditAvatarButton);
+profileAvatar.addEventListener('mouseout', hideEditAvatarButton);
+//#endregion
 
-
-Promise.all([api.getInitialCards(), api.getUserInfo()])
-  .then(([places, userData]) => {
-    userInfo.setUserInfo(userData);
-    profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
-    userId = userData._id;
-    placesSection.setItems(places);
-    placesSection.renderItems()
-  })
-  .catch(err => console.log(err))
-
+//#region Functions
 function createPlaceElement(place){
   const card =  new Card(placeTemplate, place,
     () => {
@@ -72,7 +71,7 @@ function createPlaceElement(place){
      return card;
     }
 
-function enableFormValidation(popupWithForm){
+function enableFormValidation(popupWithForm) {
   const validation=new FormValidator(validationConfig, popupWithForm.getForm());
   validation.enableValidation();
   return validation;
@@ -133,6 +132,30 @@ function submitEditAvatarForm (evt, inputValues) {
     .finally(() => popupEditAvatar.renderLoading(false, "Сохранить"))
 }
 
-profileAvatar.addEventListener('mouseover', showEditAvatarButton);
-profileAvatar.addEventListener('mouseout', hideEditAvatarButton);
+function showEditAvatarButton () {
+  avatarEditButton.style.visibility = 'visible';
+  avatarEditButton.style.opacity = '1';
+}
+
+function hideEditAvatarButton () {
+  avatarEditButton.style.visibility = 'hidden';
+  avatarEditButton.style.opacity = 0;
+}
+//#endregion
+
+
+Promise.all([api.getInitialCards(), api.getUserInfo()])
+  .then(([places, userData]) => {
+    userInfo.setUserInfo(userData);
+    profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
+    userId = userData._id;
+    placesSection.setItems(places);
+    placesSection.renderItems()
+  })
+  .catch(err => console.log(err));
+
+
+
+
+
 
