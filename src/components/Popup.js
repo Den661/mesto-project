@@ -1,19 +1,20 @@
+import {popupClosedClass, popupOpenedClass} from "../utils/constants";
 
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this._closeByOverlay =(evt)=>{ this._handleClose(evt, 'popup_opened');};
-    this._closeByX =(evt)=>{ this._handleClose(evt, 'popup__close');};
+    this._closeByOverlay =(evt)=>{ this._handleClose(evt, popupOpenedClass);};
+    this._closeByX =(evt)=>{ this._handleClose(evt, popupClosedClass);};
     this._closeByEscFunction = (evt)=>{ this._handleEscapeClose(evt);};
   }
 
  open() {
-    this._popup.classList.add('popup_opened');
+    this._popup.classList.add(popupOpenedClass);
     this.setEventListeners();
   }
 
   close() {
-    this._popup.classList.remove('popup_opened');
+    this._popup.classList.remove(popupOpenedClass);
     this._removeEventListeners();
   }
 

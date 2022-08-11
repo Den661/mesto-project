@@ -1,4 +1,5 @@
 import  Popup from "./Popup";
+import {popupImageSelector} from "../utils/constants";
 
 export default class PopupWithImage extends Popup{
   constructor(popupSelector) {
@@ -7,11 +8,10 @@ export default class PopupWithImage extends Popup{
 
 
  open(src, caption) {
-  const imagePopupPic =  this._popup.querySelector('.popup__image');
+  const imagePopupPic =  this._popup.querySelector(popupImageSelector);
   imagePopupPic.src = src;
   imagePopupPic.alt = caption;
   this._popup.querySelector('.popup__figcaption').textContent = caption;
   super.open();
  }
-
 }

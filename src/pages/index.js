@@ -7,14 +7,16 @@ import {
 import {
   profileEditButton,
   profileAddPlaceButton,
-  places,
-  avatarEditButton,
   apiConfig,
 validationConfig
 } from "../utils/constants";
 import  PopupWithForm from "../components/PopupWithForm";
 import  FormValidator  from "../components/FormValidator";
 import UserInfo from "../components/UserInfo";
+import  Api from "../components/Api";
+import Card from "../components/Card";
+import Section from "../components/Section";
+import {hideEditAvatarButton, showEditAvatarButton} from "../utils/utils";
 
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit',submitEditProfileForm);
 const profileEditValidation = enableFormValidation(popupEditProfile);
@@ -30,12 +32,7 @@ const placesSection = new Section({items:[],
     placesSection.appendElement(place)
 }},'.places__list')
 
-
-import  Api from "../components/Api";
 const api = new Api(apiConfig);
-import Card from "../components/Card";
-import Section from "../components/Section";
-
 export let userId
 
 profileEditButton.addEventListener('mousedown', openEditFormHandler);
@@ -135,17 +132,6 @@ function submitEditAvatarForm (evt, inputValues) {
     .catch(err => console.log(err))
     .finally(() => popupEditAvatar.renderLoading(false, "Сохранить"))
 }
-
-function showEditAvatarButton () {
-  avatarEditButton.style.visibility = 'visible';
-  avatarEditButton.style.opacity = '1';
-}
-
-function hideEditAvatarButton () {
-  avatarEditButton.style.visibility = 'hidden';
-  avatarEditButton.style.opacity = 0;
-}
-
 
 profileAvatar.addEventListener('mouseover', showEditAvatarButton);
 profileAvatar.addEventListener('mouseout', hideEditAvatarButton);
