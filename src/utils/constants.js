@@ -18,7 +18,8 @@ export const validationConfig =
 export const userInfoConfig =
   {
     nameSelector: '.profile__name',
-    aboutSelector: '.profile__bio'
+    aboutSelector: '.profile__bio',
+    avatarSelector: '.profile__avatar'
   }
 
 export const profile = document.querySelector('.profile');
@@ -33,6 +34,8 @@ export const deleteButtonSelector = ".place__delete-button";
 export const likesCounterSelector = ".place__likes-count";
 export const placeImageSelector = ".place__image";
 export const likeSelector = ".place__like";
-export const placeTitleSelector = ".place__title"
-export const placeSelector = ".place"
-export const popupImageSelector = ".popup__image"
+export const placeTitleSelector = ".place__title";
+export const placeSelector = ".place";
+export const popupImageSelector = ".popup__image";
+export const profileFormName = document.querySelector('.popup__input_name');
+export const profileFormBio = document.querySelector('.popup__input_bio');

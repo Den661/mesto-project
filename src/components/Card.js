@@ -4,7 +4,7 @@ import {
   deleteButtonSelector,
   placeImageSelector, placeTitleSelector, placeSelector
 } from "../utils/constants";
-import {userId} from "../pages";
+import {userInfo} from "../pages/index";
 
 export default class Card {
   constructor(templateSelector, {name, link, owner, likes, _id}, likeHandler, deleteHandler, clickHandler) {
@@ -51,11 +51,11 @@ export default class Card {
   }
 
   checkUserLiked(likes) {
-    return JSON.stringify(likes).includes(userId);
+    return JSON.stringify(likes).includes(userInfo.getUserInfo().id);
   }
 
   _setDeleteButtonState(deleteButton, ownerId) {
-    if (ownerId === userId) {
+    if (ownerId === userInfo.getUserInfo().id) {
       deleteButton.classList.add("place__delete-button_active")
     } else {
       deleteButton.classList.remove("place__delete-button_active")

@@ -7,7 +7,9 @@ import {
   profileEditButton,
   profileAddPlaceButton,
   apiConfig,
-  validationConfig
+  validationConfig,
+  profileFormName,
+  profileFormBio
 } from "../utils/constants";
 import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
@@ -20,7 +22,7 @@ import {hideEditAvatarButton, showEditAvatarButton} from "../utils/utils";
 //#endregion
 
 //#region exports
-export let userId;
+export const userInfo = new UserInfo(userInfoConfig);
 //#endregion
 
 //#region constants
@@ -30,7 +32,6 @@ const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm
 const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', submitEditAvatarForm);
 const editAvatarValidation = enableFormValidation(popupEditAvatar);
-const userInfo = new UserInfo(userInfoConfig);
 const api = new Api(apiConfig);
 const popupImg = new PopupWithImage('.popup_type_image');
 const placesSection = new Section({
@@ -81,10 +82,9 @@ function enableFormValidation(popupWithForm) {
 
 function openEditFormHandler() {
   profileEditValidation.resetFormCondition();
-  const profileForm = popupEditProfile.getForm();
   const userInfoData = userInfo.getUserInfo();
-  profileForm.querySelector('.popup__input_name').value = userInfoData.name;
-  profileForm.querySelector('.popup__input_bio').value = userInfoData.about;
+  profileFormName.value = userInfoData.name;
+  profileFormBio.value = userInfoData.about;
   popupEditProfile.open();
 }
 
@@ -95,7 +95,6 @@ function openAddPlaceHandler() {
 
 function openEditAvatarHandler() {
   editAvatarValidation.resetFormCondition();
-  hideEditAvatarButton();
   popupEditAvatar.open();
 }
 
@@ -133,7 +132,7 @@ function submitEditAvatarForm(evt, inputValues) {
   popupEditAvatar.renderLoading(true)
   api.updateAvatar(inputValues)
     .then(data => {
-      profileAvatar.style.backgroundImage = `URL(${data.avatar})`
+      userInfo.setUserInfo(data);
     })
     .then(() => popupEditAvatar.close())
     .catch(err => console.log(err))
@@ -146,8 +145,6 @@ function submitEditAvatarForm(evt, inputValues) {
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {
     userInfo.setUserInfo(userData);
-    profileAvatar.style.backgroundImage = `URL(${userData.avatar})`;
-    userId = userData._id;
     placesSection.setItems(places);
     placesSection.renderItems()
   })

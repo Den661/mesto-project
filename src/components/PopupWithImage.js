@@ -4,13 +4,14 @@ import {popupImageSelector} from "../utils/constants";
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
+    this._imagePopupPic = this._popup.querySelector(popupImageSelector);
+    this._imageCaption = this._popup.querySelector('.popup__figcaption');
   }
 
   open(src, caption) {
-    const imagePopupPic = this._popup.querySelector(popupImageSelector);
-    imagePopupPic.src = src;
-    imagePopupPic.alt = caption;
-    this._popup.querySelector('.popup__figcaption').textContent = caption;
+    this._imagePopupPic.src = src;
+    this._imagePopupPic.alt = caption;
+    this._imageCaption.textContent = caption;
     super.open();
   }
 }
