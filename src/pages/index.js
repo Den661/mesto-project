@@ -7,9 +7,7 @@ import {
   profileEditButton,
   profileAddPlaceButton,
   apiConfig,
-  validationConfig,
-  profileFormName,
-  profileFormBio
+  validationConfig
 } from "../utils/constants";
 import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
@@ -26,12 +24,10 @@ export const userInfo = new UserInfo(userInfoConfig);
 //#endregion
 
 //#region constants
+const formValidators = {};
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit', submitEditProfileForm);
-const profileEditValidation = enableFormValidation(popupEditProfile);
 const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm);
-const addImgValidation = enableFormValidation(popupAddImg);
 const popupEditAvatar = new PopupWithForm('.popup_type_edit-avatar', submitEditAvatarForm);
-const editAvatarValidation = enableFormValidation(popupEditAvatar);
 const api = new Api(apiConfig);
 const popupImg = new PopupWithImage('.popup_type_image');
 const placesSection = new Section({
@@ -74,27 +70,33 @@ function createPlaceElement(place) {
   return card;
 }
 
-function enableFormValidation(popupWithForm) {
-  const validation = new FormValidator(validationConfig, popupWithForm.getForm());
-  validation.enableValidation();
-  return validation;
-}
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator( config, formElement);
+   // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name');
+   // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
 
 function openEditFormHandler() {
-  profileEditValidation.resetFormCondition();
+  formValidators[popupEditProfile.getForm().getAttribute('name')].resetFormCondition();
   const userInfoData = userInfo.getUserInfo();
-  profileFormName.value = userInfoData.name;
-  profileFormBio.value = userInfoData.about;
+  popupEditProfile.setInputValues(userInfoData);
   popupEditProfile.open();
 }
 
 function openAddPlaceHandler() {
-  addImgValidation.resetFormCondition();
+  formValidators[popupAddImg.getForm().getAttribute('name')].resetFormCondition();
   popupAddImg.open();
 }
 
 function openEditAvatarHandler() {
-  editAvatarValidation.resetFormCondition();
+  formValidators[popupEditAvatar.getForm().getAttribute('name')].resetFormCondition();
   popupEditAvatar.open();
 }
 
@@ -141,6 +143,7 @@ function submitEditAvatarForm(evt, inputValues) {
 
 //#endregion
 
+enableValidation(validationConfig);
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([places, userData]) => {

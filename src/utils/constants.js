@@ -8,6 +8,7 @@ export const apiConfig = {
 
 export const validationConfig =
   {
+    formSelector: '.form',
     inputSelector: '.form__input',
     submitButtonSelector: '.popup__button',
     inactiveButtonClass: 'popup__button_inactive',
@@ -37,5 +38,4 @@ export const likeSelector = ".place__like";
 export const placeTitleSelector = ".place__title";
 export const placeSelector = ".place";
 export const popupImageSelector = ".popup__image";
-export const profileFormName = document.querySelector('.popup__input_name');
-export const profileFormBio = document.querySelector('.popup__input_bio');
+
