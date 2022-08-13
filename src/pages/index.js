@@ -125,7 +125,7 @@ function submitAddCardForm(evt, inputValues) {
     .then(() => popupAddImg.close())
     .catch(err => console.log(err))
     .finally(() => {
-      popupAddImg.renderLoading(false, "Создать")
+      popupAddImg.renderLoading(false)
     })
 }
 
@@ -138,7 +138,7 @@ function submitEditAvatarForm(evt, inputValues) {
     })
     .then(() => popupEditAvatar.close())
     .catch(err => console.log(err))
-    .finally(() => popupEditAvatar.renderLoading(false, "Сохранить"))
+    .finally(() => popupEditAvatar.renderLoading(false))
 }
 
 //#endregion
