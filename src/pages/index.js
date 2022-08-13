@@ -25,11 +25,8 @@ import PopupWithImage from "../components/PopupWithImage";
 import {hideEditAvatarButton, showEditAvatarButton} from "../utils/utils";
 //#endregion
 
-//#region exports
-const userInfo = new UserInfo(userInfoConfig);
-//#endregion
-
 //#region constants
+const userInfo = new UserInfo(userInfoConfig);
 const formValidators = {};
 const popupEditProfile = new PopupWithForm('.popup_type_profile-edit', submitEditProfileForm);
 const popupAddImg = new PopupWithForm('.popup_type_place-add', submitAddCardForm);
@@ -72,7 +69,7 @@ function createPlaceElement(place) {
       api.deleteCard(card._id).then(() => evt.target.closest(".place").remove())
     },
     () => {
-      popupImg.open(card._link, card._name)
+      popupImg.open(place.link, place.name)
     });
   return card;
 }
