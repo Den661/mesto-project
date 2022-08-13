@@ -2,12 +2,18 @@
 import '../styles/index.css';
 import {
   profileAvatar,
-  placeTemplate,
+  placeTemplateSelector,
   userInfoConfig,
   profileEditButton,
   profileAddPlaceButton,
   apiConfig,
-  validationConfig
+  validationConfig,
+  likesCounterSelector,
+  likeSelector,
+  deleteButtonSelector,
+  placeImageSelector,
+  placeTitleSelector,
+  placeSelector
 } from "../utils/constants";
 import PopupWithForm from "../components/PopupWithForm";
 import FormValidator from "../components/FormValidator";
@@ -20,7 +26,7 @@ import {hideEditAvatarButton, showEditAvatarButton} from "../utils/utils";
 //#endregion
 
 //#region exports
-export const userInfo = new UserInfo(userInfoConfig);
+const userInfo = new UserInfo(userInfoConfig);
 //#endregion
 
 //#region constants
@@ -49,7 +55,8 @@ profileAvatar.addEventListener('mouseout', hideEditAvatarButton);
 
 //#region Functions
 function createPlaceElement(place) {
-  const card = new Card(placeTemplate, place,
+  const card = new Card({templateSelector: placeTemplateSelector,  likesCounterSelector, likeSelector, deleteButtonSelector, placeImageSelector,
+      placeTitleSelector, placeSelector}, userInfo.getUserInfo().id , place,
     () => {
       if (card.checkUserLiked(card._likes)) {
         api.deleteLike(card._id)

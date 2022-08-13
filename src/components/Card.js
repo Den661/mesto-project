@@ -1,13 +1,7 @@
-import {
-  likesCounterSelector,
-  likeSelector,
-  deleteButtonSelector,
-  placeImageSelector, placeTitleSelector, placeSelector
-} from "../utils/constants";
-import {userInfo} from "../pages/index";
-
 export default class Card {
-  constructor(templateSelector, {name, link, owner, likes, _id}, likeHandler, deleteHandler, clickHandler) {
+  constructor({templateSelector,  likesCounterSelector, likeSelector, deleteButtonSelector, placeImageSelector,
+                placeTitleSelector, placeSelector}, userId, {name, link, owner, likes, _id},
+              likeHandler, deleteHandler, clickHandler) {
     this._templateSelector = templateSelector;
     this._name = name;
     this._link = link;
@@ -17,21 +11,28 @@ export default class Card {
     this._likeHandler = likeHandler;
     this._deleteHandler = deleteHandler;
     this._clickHandler = clickHandler;
+    this._userId = userId
+    this._likesCounterSelector = likesCounterSelector;
+    this._likeSelector = likeSelector;
+    this._deleteButtonSelector = deleteButtonSelector;
+    this._placeImageSelector = placeImageSelector;
+    this._placeTitleSelector = placeTitleSelector;
+    this._placeSelector = placeSelector;
   }
 
   _getCardTemplate() {
     return document.querySelector(this._templateSelector)
-      .content.querySelector(placeSelector)
+      .content.querySelector(this._placeSelector)
       .cloneNode(true);
   }
 
   generate() {
     const card = this._getCardTemplate();
-    this._cardImage = card.querySelector(placeImageSelector);
-    this._cardDeleteButton = card.querySelector(deleteButtonSelector);
-    this._likeElement = card.querySelector(likeSelector);
-    this._likesCounter = card.querySelector(likesCounterSelector);
-    this._cardTitle = card.querySelector(placeTitleSelector)
+    this._cardImage = card.querySelector(this._placeImageSelector);
+    this._cardDeleteButton = card.querySelector(this._deleteButtonSelector);
+    this._likeElement = card.querySelector(this._likeSelector);
+    this._likesCounter = card.querySelector(this._likesCounterSelector);
+    this._cardTitle = card.querySelector(this._placeTitleSelector)
     this._setDeleteButtonState(this._cardDeleteButton, this._ownerId);
     this.setLikes(this._likes);
     this._setEventListeners();
@@ -51,11 +52,11 @@ export default class Card {
   }
 
   checkUserLiked(likes) {
-    return JSON.stringify(likes).includes(userInfo.getUserInfo().id);
+    return JSON.stringify(likes).includes(this._userId);
   }
 
   _setDeleteButtonState(deleteButton, ownerId) {
-    if (ownerId === userInfo.getUserInfo().id) {
+    if (ownerId === this._userId) {
       deleteButton.classList.add("place__delete-button_active")
     } else {
       deleteButton.classList.remove("place__delete-button_active")
