@@ -1,4 +1,4 @@
-.popup__title{
+.popup__title {
   width: 83.25%;
   text-align: left;
   font-weight: 900;
@@ -8,8 +8,8 @@
   margin: 34px auto 0;
 }
 
-@media screen and (max-width:640px) {
-  .popup__title{
+@media screen and (max-width: 640px) {
+  .popup__title {
     width: 84.3%;
     font-size: 18px;
     line-height: 22px;

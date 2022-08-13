@@ -1,4 +1,4 @@
-.profile{
+.profile {
   margin: 0;
   padding: 40px 0 0;
   display: flex;
@@ -6,8 +6,8 @@
   align-items: center;
 }
 
-@media screen and (max-width:940px) {
-  .profile{
+@media screen and (max-width: 940px) {
+  .profile {
     flex-direction: column;
     padding: 42px 0 0;
   }
